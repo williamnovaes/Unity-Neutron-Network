@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CheatDetection
+public class ServerCheatDetection
 {
     public static bool enabled = false;
     public static bool AntiTeleport(Vector3 oldPosition, Vector3 newPosition, float tolerance)

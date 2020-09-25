@@ -16,8 +16,8 @@ public class NeutronServerEvents : MonoBehaviour
         NeutronServerFunctions.onPlayerLeaveRoom += OnPlayerLeaveRoom;
         NeutronServerFunctions.onChanged += OnPlayerPropertiesChanged;
         NeutronServerFunctions.onCheatDetected += OnCheatDetected;
-        OnCollisionEvents.onPlayerCollision += OnPlayerCollision;
-        OnCollisionEvents.onPlayerTrigger += OnPlayerTrigger;
+        ServerOnCollisionEvents.onPlayerCollision += OnPlayerCollision;
+        ServerOnCollisionEvents.onPlayerTrigger += OnPlayerTrigger;
     }
     void OnDisable()
     {
@@ -30,8 +30,8 @@ public class NeutronServerEvents : MonoBehaviour
         NeutronServerFunctions.onPlayerLeaveRoom -= OnPlayerLeaveRoom;
         NeutronServerFunctions.onChanged -= OnPlayerPropertiesChanged;
         NeutronServerFunctions.onCheatDetected -= OnCheatDetected;
-        OnCollisionEvents.onPlayerCollision -= OnPlayerCollision;
-        OnCollisionEvents.onPlayerTrigger -= OnPlayerTrigger;
+        ServerOnCollisionEvents.onPlayerCollision -= OnPlayerCollision;
+        ServerOnCollisionEvents.onPlayerTrigger -= OnPlayerTrigger;
     }
 
     private void OnPlayerTrigger(Player player, Collider coll, string type)

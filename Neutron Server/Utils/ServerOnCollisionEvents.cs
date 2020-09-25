@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class OnCollisionEvents : MonoBehaviour
+public class ServerOnCollisionEvents : MonoBehaviour
 {
     private PlayerState StatePlayer;
 

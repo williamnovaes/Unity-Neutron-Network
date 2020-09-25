@@ -24,7 +24,7 @@ public class PlayerState : Config
     {
         if (navAgent == null)
         {
-            if (CheatDetection.enabled) OnCheat();
+            if (ServerCheatDetection.enabled) OnCheat();
         }
         else if (enableNavResync) OnAgent();
     }
@@ -57,7 +57,7 @@ public class PlayerState : Config
     }
     void OnCheat()
     {
-        if (CheatDetection.AntiTeleport(transform.position, lastPosition, NeutronServerConstants.TELEPORT_TOLERANCE))
+        if (ServerCheatDetection.AntiTeleport(transform.position, lastPosition, NeutronServerConstants.TELEPORT_TOLERANCE))
         {
             NeutronServerFunctions.onCheatDetected(_Player, "Teleport");
         }
@@ -70,7 +70,7 @@ public class PlayerState : Config
         frequencyTime += Time.deltaTime;
         if (frequencyTime >= 1f)
         {
-            if (CheatDetection.AntiSpeedHack(mFrequency, NeutronServerConstants.SPEEDHACK_TOLERANCE))
+            if (ServerCheatDetection.AntiSpeedHack(mFrequency, NeutronServerConstants.SPEEDHACK_TOLERANCE))
             {
                 NeutronServerFunctions.onCheatDetected(_Player, "SpeedHack");
             }

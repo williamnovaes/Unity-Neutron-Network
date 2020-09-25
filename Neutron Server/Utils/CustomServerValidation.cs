@@ -7,8 +7,8 @@ public static class CustomServerValidation
 {
     public static void ServerMovementValidation(NeutronReader paramsReader, Player mSocket)
     {
-        if (!CheatDetection.enabled) CheatDetection.enabled = true;
-        if (CheatDetection.enabled)
+        if (!ServerCheatDetection.enabled) ServerCheatDetection.enabled = true;
+        if (ServerCheatDetection.enabled)
         {
             Vector3 newPosition = paramsReader.ReadVector3();
             Quaternion newRotation = paramsReader.ReadQuaternion();

@@ -34,13 +34,17 @@ public class NeutronServerFunctions : NeutronServerValidation
     }
     public void Dequeue(ref ConcurrentQueue<Action> cQueue, int count)
     {
-        for (int i = 0; i < count && cQueue.Count > 0; i++)
+        try
         {
-            if (cQueue.TryDequeue(out Action action))
+            for (int i = 0; i < count && cQueue.Count > 0; i++)
             {
-                action.Invoke();
+                if (cQueue.TryDequeue(out Action action))
+                {
+                    action.Invoke();
+                }
             }
         }
+        catch { Logger("Falha ao Inicializar Servidor"); }
     }
     public void Enqueue(Action action, ref ConcurrentQueue<Action> cQueue)
     {
@@ -234,7 +238,11 @@ public class NeutronServerFunctions : NeutronServerValidation
         }
         return null;
     }
-    public void Logger(object message)
+    public static bool IsHeadlessMode()
+    {
+        return SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null;
+    }
+    public static void Logger(object message)
     {
 #if UNITY_EDITOR
         Debug.Log(message);
@@ -243,7 +251,7 @@ public class NeutronServerFunctions : NeutronServerValidation
         Console.WriteLine(message);
 #endif
     }
-    public void LoggerError(object message)
+    public static void LoggerError(object message)
     {
 #if UNITY_EDITOR
         Debug.LogError(message);

@@ -8,12 +8,12 @@ public class NeutronFunctions : NeutronConstants
 {
     public static void Logger(object message)
     {
-        Debug.Log(message);
+        NeutronServerFunctions.Logger(message);
     }
 
     public static void LoggerError(object message)
     {
-        Debug.LogError(message);
+        NeutronServerFunctions.LoggerError(message);
     }
 
     protected static void ResponseRPC(int executeID, byte[] mArray)

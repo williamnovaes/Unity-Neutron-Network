@@ -6,30 +6,15 @@ using UnityEngine;
 
 public class NeutronServer : ServerUDP
 {
-    private static void CenterText(string text)
-    {
-        Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
-        _singleton.Logger(text);
-    }
-
     void Initilize()
     {
-        _TCPSocket.Start(LISTEN_MAX);
-        //====================================\\
-        TCPListen();
-        StartUDP();
-        StartUDPVoice();
-        //====================================\\
-        if (!Application.isEditor)
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                Logger("\r\n");
-            }
-            CenterText("Welcome to Neutron");
-        }
         Logger("- TCP Initialized");
         Logger("- UDP Initialized");
+        //===========================
+        TCPListen();
+        //===========================
+        StartUDP();
+        StartUDPVoice();
     }
 
     void StartUDP()
@@ -68,8 +53,6 @@ public class NeutronServer : ServerUDP
         try
         {
             TcpClient clientAccepted = ((TcpListener)ia.AsyncState).EndAcceptTcpClient(ia);
-            //================================================================================\\
-            //clientAccepted.NoDelay = true;
             //================================================================================\\
             BufferConfig BufferConfig = new BufferConfig();
             //================================================================================\\
@@ -210,6 +193,8 @@ public class NeutronServer : ServerUDP
 
     void Start()
     {
+        if (NeutronServerFunctions.IsHeadlessMode()) Logger("- Server Mode Enabled");
+        //==========================================================================
         serverChannels.Add(new Channel(0, "Canal 1", 100));
         serverChannels.Add(new Channel(1, "Canal 2", 100));
         serverChannels.Add(new Channel(2, "Canal 3", 100));
@@ -217,25 +202,5 @@ public class NeutronServer : ServerUDP
         serverChannels[0]._rooms.Add(new Room(1001, "Sala do servidor", 40, false, true, new byte[] { }));
         //===============================================================
         Initilize();
-    }
-
-    void DisableLoggger()
-    {
-#if UNITY_EDITOR
-        UnityEngine.Debug.unityLogger.logEnabled = true;
-#endif
-#if UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX
-        UnityEngine.Debug.unityLogger.logEnabled = false;
-#endif
-    }
-
-    private void OnApplicationQuit()
-    {
-        foreach (var sP in tcpPlayers)
-        {
-            sP.Value.tcpClient.Close();
-        }
-        _TCPSocket.Stop();
-        _UDPSocket.Close();
     }
 }

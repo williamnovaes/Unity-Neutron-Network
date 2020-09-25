@@ -62,47 +62,50 @@ public class Neutron : UDPManager
     /// <returns></returns>
     public static void Connect(bool Async = false)
     {
-        //_TCPSocket.NoDelay = true;
-        if (!_Connected)
+        if (!NeutronServerFunctions.IsHeadlessMode())
         {
-            try
+            if (!_Connected)
             {
-                if (!Async)
+                try
                 {
-                    _TCPSocket.Connect(_IEPSend);
-                    if (InitConnect()) TCPListenThread();
-                    StartUDP();
-                    _Connected = true;
-                }
-                else
-                {
-                    Logger("Connecting.........");
-                    _TCPSocket.BeginConnect(_IEPSend.Address, _IEPSend.Port, (e) =>
+                    if (!Async)
                     {
-                        TcpClient socket = (TcpClient)e.AsyncState;
-                        if (socket.Connected)
+                        _TCPSocket.Connect(_IEPSend);
+                        if (InitConnect()) TCPListenThread();
+                        StartUDP();
+                        _Connected = true;
+                    }
+                    else
+                    {
+                        Logger("Connecting.........");
+                        _TCPSocket.BeginConnect(_IEPSend.Address, _IEPSend.Port, (e) =>
                         {
-                            if (InitConnect()) TCPListenThread();
-                            StartUDP();
-                            _Connected = true;
-                        }
-                        else if (!_TCPSocket.Connected)
-                        {
-                            LoggerError("Enable to connect to the server");
-                            onNeutronConnected(false);
-                        }
-                        socket.EndConnect(e);
-                    }, _TCPSocket);
+                            TcpClient socket = (TcpClient)e.AsyncState;
+                            if (socket.Connected)
+                            {
+                                if (InitConnect()) TCPListenThread();
+                                StartUDP();
+                                _Connected = true;
+                            }
+                            else if (!_TCPSocket.Connected)
+                            {
+                                LoggerError("Enable to connect to the server");
+                                onNeutronConnected(false);
+                            }
+                            socket.EndConnect(e);
+                        }, _TCPSocket);
+                    }
                 }
+                catch (SocketException ex)
+                {
+                    LoggerError($"The connection to the server failed {ex.ErrorCode}");
+                    onNeutronConnected(false);
+                }
+                EventProcessor();
             }
-            catch (SocketException ex)
-            {
-                LoggerError($"The connection to the server failed {ex.ErrorCode}");
-                onNeutronConnected(false);
-            }
-            EventProcessor();
+            else LoggerError("Connection Refused!");
         }
-        else LoggerError("Connection Refused!");
+        else LoggerError("- Client Mode Disabled");
     }
 
     static void EventProcessor()
@@ -349,8 +352,6 @@ public class Neutron : UDPManager
     {
         _TCPSocket.Close();
         _UDPSocket.Close();
-        //====================================================================
-        Enqueue(() => SceneManager.LoadScene(0), ref monoBehaviourActions);
     }
 
     public static void SendVoice(byte[] buffer, int lastPos)

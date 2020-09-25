@@ -38,11 +38,26 @@ public class NeutronServerConstants : MonoBehaviour
     protected static List<IPEndPoint> udpEndPoints = new List<IPEndPoint>();
     protected static List<IPEndPoint> udpEndPointsVoices = new List<IPEndPoint>();
     //==================================================================================================================================\\
-    protected static TcpListener _TCPSocket = new TcpListener(_EndPoint);
-    protected static UdpClient _UDPSocket = new UdpClient(_EndPoint);
-    protected static UdpClient _UDPVoiceSocket = new UdpClient(new IPEndPoint(IPAddress.Any, 5056));
+    protected static TcpListener _TCPSocket;
+    protected static UdpClient _UDPSocket;
+    protected static UdpClient _UDPVoiceSocket;
     //=====================================================================\\
     protected static object lockerUDPEndPoints = new object();
     protected static object lockerUDPEndPointsVoices = new object();
-    //=====================================================================\\
+
+    private void OnEnable()
+    {
+        _TCPSocket = new TcpListener(_EndPoint);
+        _UDPSocket = new UdpClient(_EndPoint);
+        _UDPVoiceSocket = new UdpClient(new IPEndPoint(IPAddress.Any, 5056));
+        //====================================\\
+        _TCPSocket.Start(LISTEN_MAX);
+    }
+
+    private void OnApplicationQuit()
+    {
+        _TCPSocket.Server.Close();
+        _UDPSocket.Client.Close();
+        _UDPVoiceSocket.Client.Close();
+    }
 }

@@ -494,27 +494,25 @@ public class Neutron : UDPManager
     /// <returns></returns>
     public static GameObject NeutronInstantiate(Player mPlayer, Vector3 position, Quaternion rotation, GameObject prefabPlayer)
     {
-        try
+        GameObject obj = Instantiate(prefabPlayer, position, rotation);
+        //=============================================================//
+        int layerMask = LayerMask.NameToLayer("ClientObject");
+        if (layerMask > -1) obj.layer = layerMask;
+        else
         {
-            if (prefabPlayer.TryGetComponent(typeof(NeutronObject), out Component Comp))
-            {
-                GameObject obj = Instantiate(prefabPlayer, position, rotation);
-                obj.name = mPlayer.Nickname;
-                //=============================================================//
-                NeutronObject NETOBJ = obj.GetComponent<NeutronObject>();
-                NETOBJ.Infor.ownerID = mPlayer.ID;
-                neutronObjects.Add(NETOBJ.Infor.ownerID, NETOBJ);
-                //=============================================================//
-                return obj;
-            }
-            LoggerError("The Object does not contain the NeutronObject component, Try add.");
+            LoggerError("\"ClientObject\" layer not exist, create it");
             return null;
         }
-        catch
-        {
-            LoggerError("Failed Instantiate Prefab");
-            return null;
-        }
+        //=============================================================//
+        obj.AddComponent<NeutronObject>();
+        //=============================================================//
+        obj.name = mPlayer.Nickname;
+        //=============================================================//
+        NeutronObject NETOBJ = obj.GetComponent<NeutronObject>();
+        NETOBJ.Infor.ownerID = mPlayer.ID;
+        neutronObjects.Add(NETOBJ.Infor.ownerID, NETOBJ);
+        //=============================================================//
+        return obj;
     }
 
     public static void SendInput(float delay, ProtocolType protocolType = ProtocolType.Tcp)

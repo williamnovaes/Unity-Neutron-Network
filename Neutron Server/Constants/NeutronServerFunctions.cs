@@ -110,6 +110,14 @@ public class NeutronServerFunctions : NeutronServerValidation
             //======================================================================================\\
             obj.GetComponent<Renderer>().material.color = Color.red;
             //======================================================================================\\
+            int layerMask = LayerMask.NameToLayer("ServerObject");
+            if (layerMask > -1) obj.layer = layerMask;
+            else
+            {
+                LoggerError("\"ServerObject\" layer not exist, create it");
+                return false;
+            }
+            //======================================================================================\\
             obj.name = "[SERVER OBJECT]: " + mPlayer.Nickname;
             //=======================================================================================\\
             obj.AddComponent<PlayerState>();
@@ -359,7 +367,7 @@ public class NeutronServerFunctions : NeutronServerValidation
                             mSender.Send(SendTo.All, writer.GetBuffer(), broadcast, null, ProtocolType.Tcp, null, null);
                         }
                     }
-                    else SendErrorMessage(mSender, Packet.InstantiatePlayer, "SERVER: -> Failed to instantiate Player, uanble to load prefab");
+                    else SendErrorMessage(mSender, Packet.InstantiatePlayer, "SERVER: -> Failed to instantiate Player, unable to load prefab");
 
                 }, ref monoBehaviourActions);
             }

@@ -12,14 +12,10 @@ public class ServerOnCollisionEvents : MonoBehaviour
 
     private void Start()
     {
-        if (TryGetComponent(out PlayerState state))
-        {
-            StatePlayer = state;
-        }
-        else
-        {
-            StatePlayer = GetComponentInParent<PlayerState>();
-        }
+        if (TryGetComponent(out PlayerState state)) StatePlayer = state;
+        else StatePlayer = GetComponentInParent<PlayerState>();
+        //==============================================================//
+        if (StatePlayer == null) Destroy(this);
     }
 
     private void OnCollisionEnter(Collision collision)

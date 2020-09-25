@@ -16,14 +16,15 @@ public class NeutronSyncBehaviour : MonoBehaviour
             _player = value;
         }
     }
-
+    PlayerState state;
     public void Start()
     {
-        Player = GetComponent<PlayerState>()._Player;
+        state = GetComponent<PlayerState>();
+        if (state != null) Player = state._Player;
     }
 
     protected void OnNotifyChange(NeutronSyncBehaviour syncBehaviour, string propertiesName, Broadcast broadcast)
     {
-        NeutronServerFunctions.onChanged(Player, syncBehaviour, propertiesName, broadcast);
+        if (state != null) NeutronServerFunctions.onChanged(Player, syncBehaviour, propertiesName, broadcast);
     }
 }

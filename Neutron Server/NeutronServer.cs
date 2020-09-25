@@ -196,7 +196,7 @@ public class NeutronServer : ServerUDP
         if (NeutronServerFunctions.IsHeadlessMode()) Logger("- Server Mode Enabled");
         else
         {
-
+            if(!Application.isEditor) Destroy(gameObject);
         }
         //==========================================================================
         serverChannels.Add(new Channel(0, "Canal 1", 100));

@@ -41,11 +41,7 @@ public class NeutronServerEvents : MonoBehaviour
 
     private void OnPlayerCollision(Player mPlayer, Collision coll, string type)
     {
-        //EXAMPLE:
-
-        //CharacterProperties props = (CharacterProperties)mPlayer.GetStateObject().neutronSyncBehaviour;
-        ////=============================================================================================//
-        //props.Health -= 10;
+        
     }
 
     private void OnCheatDetected(Player playerDetected, System.String cheatName)
@@ -55,13 +51,7 @@ public class NeutronServerEvents : MonoBehaviour
 
     private void OnPlayerPropertiesChanged(Player mPlayer, NeutronSyncBehaviour properties, System.String propertieName, Broadcast broadcast)
     {
-        //EXAMPLE:
-
-        //CharacterProperties props = (CharacterProperties)mPlayer.GetStateObject().neutronSyncBehaviour;
-        ////=============================================================================================//
-        //Debug.Log(props.Health);
-        ////=============================================================================================//
-        //NeutronServerFunctions.SendProperties(mPlayer, props, SendTo.Only, Broadcast.None);
+       
     }
 
     private void OnPlayerLeaveRoom(Player playerLeave)
@@ -91,7 +81,7 @@ public class NeutronServerEvents : MonoBehaviour
 
     private void OnPlayerInstantiated(Player playerInstantiated)
     {
-        Debug.Log($"The player {playerInstantiated.Nickname} has instantiated in room {playerInstantiated.currentRoom}");
+
     }
 
     private void OnPlayerDisconnected(Player playerDisconnected)

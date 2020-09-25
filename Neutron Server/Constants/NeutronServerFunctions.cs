@@ -6,7 +6,7 @@ using System.Net;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-public class NeutronServerFunctions : Validation
+public class NeutronServerFunctions : NeutronServerValidation
 {
     public static NeutronServerFunctions _singleton;
     //=============================================================================================================

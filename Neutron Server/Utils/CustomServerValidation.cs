@@ -3,7 +3,7 @@
 /// <summary>
 /// Note: Do not modify this class, create your custom validation class and call Validation.
 /// </summary>
-public static class ServerValidation
+public static class CustomServerValidation
 {
     public static void ServerMovementValidation(NeutronReader paramsReader, Player mSocket)
     {

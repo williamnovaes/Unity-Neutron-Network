@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using VoiceAPI;
 
-public class ChatVoice : MonoBehaviour
+public class Voice : MonoBehaviour
 {
     private string path;
     [SerializeField] private bool isEnable = true;

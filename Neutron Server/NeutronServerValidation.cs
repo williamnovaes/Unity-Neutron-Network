@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Net.Sockets;
-using UnityEngine;
 
-public class Validation : NeutronServerConstants
+public class NeutronServerValidation : NeutronServerConstants
 {
     public void ExecuteValidation(ValidationPacket vType, NeutronReader paramsReader, Player mSocket)
     {
@@ -13,7 +11,7 @@ public class Validation : NeutronServerConstants
                 switch (vType)
                 {
                     case ValidationPacket.Movement:
-                        ServerValidation.ServerMovementValidation(paramsReader, mSocket); // Don't change that.
+                        CustomServerValidation.ServerMovementValidation(paramsReader, mSocket); // Don't change that.
                         break;
                     case ValidationPacket.None:
                         // Your custom validation script.

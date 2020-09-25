@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using UnityEngine;
 
-public class NeutronEvents : MonoBehaviour
+public class NeutronServerEvents : MonoBehaviour
 {
     void OnEnable()
     {

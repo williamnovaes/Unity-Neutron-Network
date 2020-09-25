@@ -7,7 +7,7 @@ public class NeutronObject : MonoBehaviour
     [NonSerialized] public NavMeshAgent agent;
     public NeutronProperty Infor;
     public NavMeshResyncProps navMeshResync;
-    public NeutronSyncBehaviour myProperties;
+    public NSyncBehaviour myProperties;
 
     private void Start()
     {

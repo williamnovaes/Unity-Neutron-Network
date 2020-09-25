@@ -194,6 +194,10 @@ public class NeutronServer : ServerUDP
     void Start()
     {
         if (NeutronServerFunctions.IsHeadlessMode()) Logger("- Server Mode Enabled");
+        else
+        {
+
+        }
         //==========================================================================
         serverChannels.Add(new Channel(0, "Canal 1", 100));
         serverChannels.Add(new Channel(1, "Canal 2", 100));

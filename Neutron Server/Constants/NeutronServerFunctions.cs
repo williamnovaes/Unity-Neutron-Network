@@ -108,7 +108,9 @@ public class NeutronServerFunctions : NeutronServerValidation
         {
             GameObject obj = Instantiate(playerPref, pos, rot);
             //======================================================================================\\
-            obj.name = mPlayer.Nickname;
+            obj.GetComponent<Renderer>().material.color = Color.red;
+            //======================================================================================\\
+            obj.name = "[SERVER OBJECT]: " + mPlayer.Nickname;
             //=======================================================================================\\
             obj.AddComponent<PlayerState>();
             //=======================================================================================\\

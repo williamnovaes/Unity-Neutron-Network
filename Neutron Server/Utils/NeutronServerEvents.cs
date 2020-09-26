@@ -36,7 +36,7 @@ public class NeutronServerEvents : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     private void OnPlayerTrigger(Player player, Collider coll, string type)
@@ -46,7 +46,7 @@ public class NeutronServerEvents : MonoBehaviour
 
     private void OnPlayerCollision(Player mPlayer, Collision coll, string type)
     {
-        ((myplayerProps)mPlayer.GetStateObject().neutronSyncBehaviour).Health -= 10;
+       
     }
 
     private void OnCheatDetected(Player playerDetected, System.String cheatName)
@@ -56,8 +56,7 @@ public class NeutronServerEvents : MonoBehaviour
 
     private void OnPlayerPropertiesChanged(Player mPlayer, NeutronSyncBehaviour properties, System.String propertieName, Broadcast broadcast)
     {
-        myplayerProps mProps = (myplayerProps)mPlayer.GetStateObject().neutronSyncBehaviour;
-        NeutronServerFunctions.SendProperties(mPlayer, mProps, SendTo.All, broadcast);
+        
     }
 
     private void OnPlayerLeaveRoom(Player playerLeave)

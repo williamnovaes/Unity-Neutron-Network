@@ -8,11 +8,17 @@ public class NavSync : RPCBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        //==============================================//
+        if (Application.isEditor) agent.radius = 0.01f;
+        //==============================================//
+        agent.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        //==============================================//
+        if (Neutron.IsServer(gameObject)) Destroy(this);
     }
 
     void Update()
     {
-        if (Neutron.IsMine(isMine))
+        if (Neutron.IsMine)
         {
             if (Input.GetMouseButtonDown(0))
             {

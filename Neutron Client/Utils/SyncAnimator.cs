@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class SyncAnimator : RPCBehaviour
 {
     [SerializeField] private Protocol protocolType;
@@ -11,6 +12,8 @@ public class SyncAnimator : RPCBehaviour
 
     void Start()
     {
+        if (Neutron.IsServer(gameObject)) Destroy(this);
+        //==============================================//
         GetAnimator = GetComponent<Animator>();
     }
 
@@ -42,7 +45,7 @@ public class SyncAnimator : RPCBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Neutron.IsMine(isMine))
+        if (Neutron.IsMine)
         {
             if (GetParameters(out object[] parameters))
             {
@@ -50,7 +53,7 @@ public class SyncAnimator : RPCBehaviour
                 {
                     streamParams.Write(parameters.Serialize());
                     //======================================================================================================================================
-                    Neutron.RPC(isMine, 254, ValidationPacket.None, syncTime, streamParams, SendTo.Others, false, Broadcast.Channel, (ProtocolType)(int)protocolType);
+                    Neutron.RPC(Neutron.NeutronObject, 254, ValidationPacket.None, syncTime, streamParams, SendTo.Others, false, Broadcast.Channel, (ProtocolType)(int)protocolType);
                 }
             }
         }

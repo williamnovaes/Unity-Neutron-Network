@@ -18,22 +18,18 @@ public enum SendTo
 
 public enum Packet
 {
-    Nickname,
-    OnCustomPacket,
-    KeepAlive,
     Connected,
     Disconnected,
-    RPC,
-    SendChat,
-    SendInput,
-    InstantiatePlayer,
-    Database,
     Login,
-    GetChannels,
-    GetChached,
+    RPC,
     JoinChannel,
     JoinRoom,
     CreateRoom,
+    SendChat,
+    SendInput,
+    InstantiatePlayer,
+    GetChannels,
+    GetChached,
     GetRooms,
     Fail,
     DestroyPlayer,
@@ -42,6 +38,9 @@ public enum Packet
     SendMousePosition,
     navMeshResync,
     playerProps,
+    Database,
+    Nickname,
+    OnCustomPacket,
     //======================================================
     // - CUSTOM PACKETS ADD HERE
     //======================================================
@@ -52,7 +51,7 @@ public enum CachedPacket
     /// <summary>
     /// Used to instantiate other players on this client.
     /// </summary>
-    ResyncInstantiate,
+    ResyncInstantiate = 121,
     //======================================================
     // - CUSTOM PACKETS ADD HERE
     //======================================================

@@ -13,12 +13,15 @@ public class Neutron : UDPManager
 {
     public static NeutronObject NeutronObject { get; set; }
 
-    public static bool _Connected { get; set; }
-
     /// <summary>
     /// Returns to the local player's instance.
     /// </summary>
     public static Player myPlayer;
+
+    public static bool _Connected { get; set; }
+
+    public static bool IsMine { get => NeutronObject.Infor.ownerID == myPlayer.ID; }
+
     static string _Nickname;
     /// <summary>
     /// The nickname of the player that will be used to be displayed to other players.
@@ -189,28 +192,9 @@ public class Neutron : UDPManager
         return true;
     }
 
-    public static bool IsMine(NeutronObject mObj)
-    {
-        return mObj.Infor.ownerID == myPlayer.ID;
-    }
-
-    public static bool IsMine(Player mPlayer)
+    public static bool IsEquals(Player mPlayer)
     {
         return mPlayer.Equals(myPlayer);
-    }
-
-    public static void SetMine(Player mPlayer, GameObject playerObject)
-    {
-        if (mPlayer.Equals(myPlayer))
-        {
-            if (playerObject.TryGetComponent<NeutronObject>(out NeutronObject obj))
-            {
-                NeutronObject = obj;
-            }
-            else NeutronObject = playerObject.transform.root.GetComponent<NeutronObject>();
-
-            if (NeutronObject == null) Debug.LogError("SetMine not found NeutronObject. Try Add");
-        }
     }
 
     public static object Fire(Delegate @delegate, object[] parameters)
@@ -512,6 +496,8 @@ public class Neutron : UDPManager
         NETOBJ.Infor.ownerID = mPlayer.ID;
         neutronObjects.Add(NETOBJ.Infor.ownerID, NETOBJ);
         //=============================================================//
+        if (mPlayer.Equals(myPlayer)) NeutronObject = NETOBJ;
+        //=============================================================//
         return obj;
     }
 
@@ -583,6 +569,11 @@ public class Neutron : UDPManager
                     break;
             }
         }
+    }
+
+    public static bool IsServer(GameObject obj)
+    {
+        return obj.layer == LayerMask.NameToLayer("ServerObject");
     }
 
     /// <summary>

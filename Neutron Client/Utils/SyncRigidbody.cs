@@ -17,6 +17,8 @@ public class SyncRigidbody : RPCBehaviour
 
     void Start()
     {
+        if (Neutron.IsServer(gameObject)) Destroy(this);
+        //==============================================//
         GetRigidbody = GetComponent<Rigidbody>();
     }
 
@@ -26,7 +28,7 @@ public class SyncRigidbody : RPCBehaviour
 
     void Update()
     {
-        if (Neutron.IsMine(isMine))
+        if (Neutron.IsMine)
         {
             switch (whenChanging)
             {
@@ -113,7 +115,7 @@ public class SyncRigidbody : RPCBehaviour
             streamParams.Write(GetRigidbody.velocity);
             streamParams.Write(GetRigidbody.angularVelocity);
             //======================================================================================================================================
-            Neutron.RPC(isMine, 255, ValidationPacket.Movement, syncTime, streamParams, sendTo, false, Broadcast.Channel, (ProtocolType)(int)protocolType);
+            Neutron.RPC(Neutron.NeutronObject, 255, ValidationPacket.Movement, syncTime, streamParams, sendTo, false, Broadcast.Channel, (ProtocolType)(int)protocolType);
         }
     }
 
@@ -131,7 +133,7 @@ public class SyncRigidbody : RPCBehaviour
 
     private void FixedUpdate()
     {
-        if (!Neutron.IsMine(isMine))
+        if (!Neutron.IsMine)
         {
             GetRigidbody.velocity = newVelocity;
             GetRigidbody.angularVelocity = newAngularVelocity;

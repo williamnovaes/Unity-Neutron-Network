@@ -47,11 +47,14 @@ public class NeutronServerConstants : MonoBehaviour
 
     private void OnEnable()
     {
-        _TCPSocket = new TcpListener(_EndPoint);
-        _UDPSocket = new UdpClient(_EndPoint);
-        _UDPVoiceSocket = new UdpClient(new IPEndPoint(IPAddress.Any, 5056));
-        //====================================\\
-        _TCPSocket.Start(LISTEN_MAX);
+        if (NeutronServerFunctions.IsHeadlessMode() || Application.isEditor)
+        {
+            _TCPSocket = new TcpListener(_EndPoint);
+            _UDPSocket = new UdpClient(_EndPoint);
+            _UDPVoiceSocket = new UdpClient(new IPEndPoint(IPAddress.Any, 5056));
+            //====================================\\
+            _TCPSocket.Start(LISTEN_MAX);
+        }
     }
 
     private void OnApplicationQuit()

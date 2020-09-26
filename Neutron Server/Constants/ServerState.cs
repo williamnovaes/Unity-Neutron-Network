@@ -63,8 +63,8 @@ public class PlayerState : Config
         }
         else
         {
-            transform.position = Vector3.Lerp(transform.position, lastPosition, 5f * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, lastRotation, 5f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, lastPosition, 8f * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, lastRotation, 8f * Time.deltaTime);
         }
 
         frequencyTime += Time.deltaTime;
